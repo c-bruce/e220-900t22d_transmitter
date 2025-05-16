@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 
 // void setup() {
 //   Serial.begin(9600);
@@ -16,8 +17,11 @@ struct SensorData {
   float voltage;
 };
 
+SoftwareSerial loraSerial(2, 3); // RX, TX
+
 void setup() {
   Serial.begin(9600);
+  loraSerial.begin(9600);
 }
 
 void loop() {
@@ -25,7 +29,7 @@ void loop() {
   data.temperature = 25;
   data.voltage = 3.7;
 
-  Serial.write((uint8_t *)&data, sizeof(data));
+  loraSerial.write((uint8_t *)&data, sizeof(data));
 
   delay(2000);
 }
